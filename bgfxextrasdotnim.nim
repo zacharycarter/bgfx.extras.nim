@@ -211,8 +211,4 @@ type
   AllocatorI = object
 
 proc nvgCreate*(edgeaa: cint; viewId: cuchar; allocator: ptr AllocatorI = nil): ptr NVGcontext {.importc: "nvgCreate", dynlib: libname.}
-
-when isMainModule:
-  if not bgfx_init(BGFX_RENDERER_TYPE_COUNT, 0'u16, 0, nil, nil):
-    echo("Error initializng BGFX.")
-  echo repr nvgCreate(1, 0.cuchar)
+proc nvgCreateFont*(ctx: ptr NVGcontext; name: cstring; filename: cstring): cint {.importc: "nvgCreateFont", dynlib: libname.}
