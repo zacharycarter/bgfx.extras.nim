@@ -6,6 +6,8 @@ const NVG_MAX_STATES = 32
 const NVG_MAX_FONTIMAGES = 4
 
 type
+  ImguiFontHandle = object
+
   INNER_C_STRUCT_360867024* = object
     r*: cfloat
     g*: cfloat
@@ -210,5 +212,53 @@ type
   
   AllocatorI = object
 
-proc nvgCreate*(edgeaa: cint; viewId: cuchar; allocator: ptr AllocatorI = nil): ptr NVGcontext {.importc: "nvgCreate", dynlib: libname.}
+proc nvgCreate*(edgeaa: cint; viewId: cuchar): ptr NVGcontext {.importc: "nvgCreate", dynlib: libname.}
 proc nvgCreateFont*(ctx: ptr NVGcontext; name: cstring; filename: cstring): cint {.importc: "nvgCreateFont", dynlib: libname.}
+proc nvgBeginFrame*(ctx: ptr NVGcontext; windowWidth: cint; windowHeight: cint;
+                   devicePixelRatio: cfloat) {.importc: "nvgBeginFrame", dynlib: libname.}
+proc nvgEndFrame*(ctx: ptr NVGcontext) {.importc: "nvgEndFrame", dynlib: libname.}
+
+proc nvgSave*(ctx: ptr NVGcontext) {.importc: "nvgSave", dynlib: libname.}
+proc nvgRestore*(ctx: ptr NVGcontext) {.importc: "nvgRestore", dynlib: libname.}
+
+proc nvgBeginPath*(ctx: ptr NVGcontext) {.importc: "nvgBeginPath", dynlib: libname.}
+proc nvgRoundedRect*(ctx: ptr NVGcontext; x: cfloat; y: cfloat; w: cfloat; h: cfloat;
+                    r: cfloat) {.importc: "nvgRoundedRect", dynlib: libname.}
+proc nvgFillColor*(ctx: ptr NVGcontext; color: NVGcolor) {.importc: "nvgFillColor", dynlib: libname.}
+proc nvgFill*(ctx: ptr NVGcontext) {.importc: "nvgFill", dynlib: libname.}
+
+proc nvgRGBA*(r: cuchar; g: cuchar; b: cuchar; a: cuchar): NVGcolor {.importc: "nvgRGBA", dynlib: libname.}
+
+proc nvgBoxGradient*(ctx: ptr NVGcontext; x: cfloat; y: cfloat; w: cfloat; h: cfloat;
+                    r: cfloat; f: cfloat; icol: NVGcolor; ocol: NVGcolor): NVGpaint {.importc: "nvgBoxGradient", dynlib: libname.}
+
+proc nvgRect*(ctx: ptr NVGcontext; x: cfloat; y: cfloat; w: cfloat; h: cfloat) {.importc: "nvgRect", dynlib: libname.}
+
+proc nvgPathWinding*(ctx: ptr NVGcontext; dir: cint) {.importc: "nvgPathWinding", dynlib: libname.}
+
+proc nvgFillPaint*(ctx: ptr NVGcontext; paint: NVGpaint) {.importc: "nvgFillPaint", dynlib: libname.}
+
+proc nvgLinearGradient*(ctx: ptr NVGcontext; sx: cfloat; sy: cfloat; ex: cfloat;
+                       ey: cfloat; icol: NVGcolor; ocol: NVGcolor): NVGpaint {.importc: "nvgLinearGradient", dynlib: libname.}
+
+proc nvgMoveTo*(ctx: ptr NVGcontext; x: cfloat; y: cfloat) {.importc: "nvgMoveTo", dynlib: libname.}
+
+proc nvgLineTo*(ctx: ptr NVGcontext; x: cfloat; y: cfloat) {.importc: "nvgLineTo", dynlib: libname.}
+
+proc nvgStrokeColor*(ctx: ptr NVGcontext; color: NVGcolor) {.importc: "nvgStrokeColor", dynlib: libname.}
+
+proc nvgStroke*(ctx: ptr NVGcontext) {.importc: "nvgStroke", dynlib: libname.}
+
+proc nvgFontSize*(ctx: ptr NVGcontext; size: cfloat) {.importc: "nvgFontSize", dynlib: libname.}
+
+proc nvgFontFace*(ctx: ptr NVGcontext; font: cstring) {.importc: "nvgFontFace", dynlib: libname.}
+
+proc nvgTextAlign*(ctx: ptr NVGcontext; align: cint) {.importc: "nvgTextAlign", dynlib: libname.}
+
+proc nvgFontBlur*(ctx: ptr NVGcontext; blur: cfloat) {.importc: "nvgFontBlur", dynlib: libname.}
+
+proc nvgText*(ctx: ptr NVGcontext; x: cfloat; y: cfloat; string: cstring; `end`: cstring): cfloat {.importc: "nvgText", dynlib: libname.}
+
+proc imguiCreate*(data: pointer = nil, size: uint32 = 0, fontSize: float = 18.0, allocator: ptr AllocatorI = nil): ImguiFontHandle {.importc: "imguiCreate", dynlib: libname.}
+
+proc imguiDestroy*() {.importc: "imguiDestroy", dynlib: libname.}

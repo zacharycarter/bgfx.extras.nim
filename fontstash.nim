@@ -1,6 +1,3 @@
-import
-  freetype
-
 const
   FONS_INVALID* = - 1
   FONS_HASH_LUT_SIZE = 256
@@ -9,6 +6,8 @@ const
   FONS_MAX_STATES = 20
 
 type
+  Face = object
+
   FONSttFontImpl* = object
     font*: Face
     
