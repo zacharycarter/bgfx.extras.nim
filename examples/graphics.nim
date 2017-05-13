@@ -125,9 +125,9 @@ proc init*(graphics: Graphics, title: string, width, height: int, flags: uint32)
 
   bgfx_set_debug(BGFX_DEBUG_TEXT)
 
-  bgfx_reset(uint32 width, uint32 height, BGFX_RESET_NONE)
+  bgfx_reset(uint32 width, uint32 height, BGFX_RESET_VSYNC)
 
-  bgfx_set_view_rect(0, 0, 0, uint16 width, uint16 height)
+  bgfx_set_view_clear(0, BGFX_CLEAR_COLOR or BGFX_CLEAR_DEPTH, 0x303030ff, 1.0, 0)
 
 proc dispose*(graphics: Graphics) =
   sdl.destroyWindow(graphics.rootWindow.handle)

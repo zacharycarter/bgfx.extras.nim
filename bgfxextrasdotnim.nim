@@ -18,10 +18,10 @@ type
     rgba*: array[4, cfloat]
     ano_369128525*: INNER_C_STRUCT_360867024
 
-  NVGcolor* = object
+  NVGcolor* = object {.bycopy.}
     ano_377390029*: INNER_C_UNION_3941339160
 
-  NVGpaint* = object
+  NVGpaint* = object {.bycopy.}
     xform*: array[6, cfloat]
     extent*: array[2, cfloat]
     radius*: cfloat
@@ -30,19 +30,19 @@ type
     outerColor*: NVGcolor
     image*: cint
 
-  NVGwinding* = enum
+  NVGwindings* {.size: sizeof(cint)} = enum
     NVG_CCW = 1,                ##  Winding for solid shapes
     NVG_CW = 2                  ##  Winding for holes
   
 
-  NVGsolidity* = enum
+  NVGsolidity* {.size: sizeof(cint).} = enum
     NVG_SOLID = 1,              ##  CCW
     NVG_HOLE = 2                ##  CW
 
-  NVGlineCap* = enum
+  NVGlineCap* {.size: sizeof(cint).} = enum
     NVG_BUTT, NVG_ROUND, NVG_SQUARE, NVG_BEVEL, NVG_MITER
 
-  NVGalign* = enum              ##  Horizontal align
+  NVGalign* {.size: sizeof(cint).} = enum              ##  Horizontal align
     NVG_ALIGN_LEFT = 1 shl 0,     ##  Default, align text horizontally to left.
     NVG_ALIGN_CENTER = 1 shl 1,   ##  Align text horizontally to center.
     NVG_ALIGN_RIGHT = 1 shl 2,    ##  Align text horizontally to right.
@@ -52,14 +52,14 @@ type
     NVG_ALIGN_BOTTOM = 1 shl 5,   ##  Align text vertically to bottom.
     NVG_ALIGN_BASELINE = 1 shl 6  ##  Default, align text vertically to baseline.
 
-  NVGblendFactor* = enum
+  NVGblendFactor* {.size: sizeof(cint).} = enum
     NVG_ZERO = 1 shl 0, NVG_ONE = 1 shl 1, NVG_SRC_COLOR = 1 shl 2,
     NVG_ONE_MINUS_SRC_COLOR = 1 shl 3, NVG_DST_COLOR = 1 shl 4,
     NVG_ONE_MINUS_DST_COLOR = 1 shl 5, NVG_SRC_ALPHA = 1 shl 6,
     NVG_ONE_MINUS_SRC_ALPHA = 1 shl 7, NVG_DST_ALPHA = 1 shl 8,
     NVG_ONE_MINUS_DST_ALPHA = 1 shl 9, NVG_SRC_ALPHA_SATURATE = 1 shl 10
 
-  NVGcompositeOperation* = enum
+  NVGcompositeOperation* {.size: sizeof(cint).} = enum
     NVG_SOURCE_OVER, NVG_SOURCE_IN, NVG_SOURCE_OUT, NVG_ATOP, NVG_DESTINATION_OVER,
     NVG_DESTINATION_IN, NVG_DESTINATION_OUT, NVG_DESTINATION_ATOP, NVG_LIGHTER,
     NVG_COPY, NVG_XOR
@@ -141,10 +141,10 @@ type
                           scissor: ptr NVGscissor; verts: ptr NVGvertex; nverts: cint)
     renderDelete*: proc (uptr: pointer)
 
-  NVGcommands* {.pure.} = enum
+  NVGcommands* {.size: sizeof(cint).} = enum
     NVG_MOVETO = 0, NVG_LINETO = 1, NVG_BEZIERTO = 2, NVG_CLOSE = 3, NVG_WINDING = 4
 
-  NVGpointFlags* = enum
+  NVGpointFlags* {.size: sizeof(cint).} = enum
     NVG_PT_CORNER = 0x00000001, NVG_PT_LEFT = 0x00000002, NVG_PT_BEVEL = 0x00000004,
     NVG_PR_INNERBEVEL = 0x00000008
 
@@ -213,6 +213,7 @@ type
   AllocatorI = object
 
 proc nvgCreate*(edgeaa: cint; viewId: cuchar): ptr NVGcontext {.importc: "nvgCreate", dynlib: libname.}
+proc nvgDelete*(ctx: ptr NVGcontext) {.importc: "nvgCreate", dynlib: libname.}
 proc nvgCreateFont*(ctx: ptr NVGcontext; name: cstring; filename: cstring): cint {.importc: "nvgCreateFont", dynlib: libname.}
 proc nvgBeginFrame*(ctx: ptr NVGcontext; windowWidth: cint; windowHeight: cint;
                    devicePixelRatio: cfloat) {.importc: "nvgBeginFrame", dynlib: libname.}
