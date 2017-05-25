@@ -260,6 +260,8 @@ proc nvgFontBlur*(ctx: ptr NVGcontext; blur: cfloat) {.importc: "nvgFontBlur", d
 
 proc nvgText*(ctx: ptr NVGcontext; x: cfloat; y: cfloat; string: cstring; `end`: cstring): cfloat {.importc: "nvgText", dynlib: libname.}
 
+proc nvgCircle*(ctx: ptr NVGcontext; cx: cfloat; cy: cfloat; r: cfloat) {.importc: "nvgCircle", dynlib: libname.}
+
 proc imguiCreate*(data: pointer = nil, size: uint32 = 0, fontSize: float = 18.0, allocator: ptr AllocatorI = nil): ImguiFontHandle {.importc: "imguiCreate", dynlib: libname.}
 
 proc imguiDestroy*() {.importc: "imguiDestroy", dynlib: libname.}
